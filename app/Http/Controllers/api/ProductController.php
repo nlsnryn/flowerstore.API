@@ -34,11 +34,34 @@ class ProductController extends Controller
         return response()->json($products);
     }
 
-    public function show()
+    public function show(Product $product)
     {
+        return response()->json($product);
     }
 
-    public function update()
+    public function update(Request $request, Product $product)
     {
+
+        $request->validate([
+            'product_name' => 'required|max:255|string',
+            'product_description' => 'required|max:255|string',
+            'quantity' => 'required|max:255',
+            'price' => 'required|max:255',
+        ]);
+
+        $status = $request->quantity == 0 ? false : true;
+
+        $product->update([
+            'product_name' => $request->product_name,
+            'product_description' => $request->product_description,
+            'quantity' => $request->quantity,
+            'price' => $request->price,
+            'status' => $status
+        ]);
+
+        return response()->json([
+            'message' => 'Update Successfully',
+            'product' => $product
+        ]);
     }
 }
