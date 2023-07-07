@@ -12,13 +12,16 @@ class OrderController extends Controller
 {
     public function order(Request $request)
     {
+        $quantityUpdated = $this->updateQuantity($request);
+        if ($quantityUpdated) {
+            return $quantityUpdated;
+        }
+
         $order = Order::create([
             'product_id' => $request->product_id,
             'user_id' => $request->user_id,
             'price' => $request->price * $request->quantity
         ]);
-
-        $this->updateQuantity($request);
 
         return response()->json([
             'message' => 'Order successfully',
@@ -55,13 +58,17 @@ class OrderController extends Controller
     public function updateQuantity($request)
     {
         $product = Product::where('id', $request->product_id)->first();
-        // dd($product);
-        $newQuantity = $product->quantity - $request->quantity;
 
-        $product->update([
-            'quantity' => $newQuantity
-        ]);
+        if ($product->quantity >= $request->quantity && !!$request->quantity) {
+            $newQuantity = $product->quantity - $request->quantity;
 
-        return;
+            $product->update([
+                'quantity' => $newQuantity
+            ]);
+        } else {
+            return response()->json([
+                'message' => 'Its either falsy value or out of stocks, check the product quantity.'
+            ]);
+        }
     }
 }
