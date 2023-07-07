@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\api\AuthController;
-use App\Http\Controllers\api\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\api\AuthController;
+use App\Http\Controllers\api\OrderController;
+use App\Http\Controllers\api\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,3 +29,7 @@ route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanc
 
 // Product
 route::apiResource('products', ProductController::class)->middleware('auth:sanctum');
+
+// Order
+route::get('/orders', [OrderController::class, 'viewOrders'])->middleware('auth:sanctum');
+route::post('/order', [OrderController::class, 'order'])->middleware('auth:sanctum');
