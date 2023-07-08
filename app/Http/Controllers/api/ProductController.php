@@ -49,7 +49,11 @@ class ProductController extends Controller
             'price' => 'required|max:255',
         ]);
 
-        $status = $request->quantity == 0 ? false : true;
+        if ($request->quantity == 0) {
+            $status = false;
+        } else {
+            $status = (bool)$request->status;
+        }
 
         $product->update([
             'product_name' => $request->product_name,

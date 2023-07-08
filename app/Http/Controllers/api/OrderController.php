@@ -20,7 +20,7 @@ class OrderController extends Controller
         $order = Order::create([
             'product_id' => $request->product_id,
             'user_id' => $request->user_id,
-            'price' => $request->price * $request->quantity
+            'price' => $request->price
         ]);
 
         return response()->json([
@@ -29,9 +29,8 @@ class OrderController extends Controller
         ]);
     }
 
-    public function viewOrders()
+    public function viewOrders($id)
     {
-        $id = Auth::id();
         $orders = Order::where('user_id', $id)->get();
 
         $orderData = [];
@@ -49,18 +48,15 @@ class OrderController extends Controller
             }
         }
 
-        return response()->json([
-            'message' => 'fetched successfully',
-            'data' => $orderData
-        ]);
+        return response()->json($orderData);
     }
 
     public function updateQuantity($request)
     {
         $product = Product::where('id', $request->product_id)->first();
 
-        if ($product->quantity >= $request->quantity && !!$request->quantity) {
-            $newQuantity = $product->quantity - $request->quantity;
+        if ($product->quantity >= 1) {
+            $newQuantity = $product->quantity - 1;
 
             $product->update([
                 'quantity' => $newQuantity

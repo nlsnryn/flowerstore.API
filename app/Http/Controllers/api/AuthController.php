@@ -27,6 +27,12 @@ class AuthController extends Controller
         }
 
         $user = User::where('email', $request->email)->firstOrFail();
+        if ($user->status != 'active') {
+            return response()->json([
+                'message' => 'Account need to activate.'
+            ]);
+        }
+
         $token = $user->createToken($request->email)->plainTextToken;
 
         return response()->json([

@@ -31,5 +31,5 @@ route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanc
 route::apiResource('products', ProductController::class)->middleware('auth:sanctum');
 
 // Order
-route::get('/orders', [OrderController::class, 'viewOrders'])->middleware('auth:sanctum');
+route::get('/orders/{id}', [OrderController::class, 'viewOrders'])->middleware('auth:sanctum');
 route::post('/order', [OrderController::class, 'order'])->middleware('auth:sanctum');
