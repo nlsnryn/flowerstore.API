@@ -58,8 +58,11 @@ class OrderController extends Controller
         if ($product->quantity >= 1) {
             $newQuantity = $product->quantity - 1;
 
+            $status = $newQuantity == 0 ? false : true;
+
             $product->update([
-                'quantity' => $newQuantity
+                'quantity' => $newQuantity,
+                'status' => $status
             ]);
         } else {
             return response()->json([

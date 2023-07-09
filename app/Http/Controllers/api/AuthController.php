@@ -20,19 +20,13 @@ class AuthController extends Controller
             return response()->json([
                 'message' => 'Invalid credentials, please check your email and password or create new account',
                 'errors' => [
-                    'email' => 'Invalid credentials',
+                    'email' => 'Invalid email',
                     'password' => 'Incorrect password'
                 ]
             ], 403);
         }
 
         $user = User::where('email', $request->email)->firstOrFail();
-        if ($user->status != 'active') {
-            return response()->json([
-                'message' => 'Account need to activate.'
-            ]);
-        }
-
         $token = $user->createToken($request->email)->plainTextToken;
 
         return response()->json([
@@ -60,7 +54,7 @@ class AuthController extends Controller
             'password' => $request->password,
             'mobile_number' => $request->mobile_number,
             'address' => $request->address,
-            'status' => 'active'
+            'status' => 'customer'
         ]);
 
         $token = $user->createToken($request->email)->plainTextToken;

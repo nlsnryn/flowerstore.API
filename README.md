@@ -9,7 +9,7 @@
 
 ## About Website
 
-FlowerStore.API. E-commerce for flowers
+FlowerStore.API. E-commerce for flowers. Fullstack Developer Exam
 
 ## Installation
 
