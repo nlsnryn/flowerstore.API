@@ -9,7 +9,7 @@
 
 ## About Website
 
-FlowerStore.API. E-commerce for flowers. Fullstack Developer Exam
+FlowerStore.API for Server, this is server for FlowerStorePH Developer Exam e-commerce project. The frontend of this application repository https://github.com/nlsnryn/flowerstore.UI
 
 ## Installation
 
